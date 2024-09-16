@@ -1,7 +1,0 @@
-{
-	"name": "SHIR-fromonpremises",
-	"properties": {
-		"type": "SelfHosted",
-		"description": "for connecting MS SQL server"
-	}
-}
