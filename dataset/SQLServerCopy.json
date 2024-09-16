@@ -1,0 +1,13 @@
+{
+	"name": "SQLServerCopy",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "On_Premises_SQLSERVER",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
