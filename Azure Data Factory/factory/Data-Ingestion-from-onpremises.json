@@ -1,0 +1,9 @@
+{
+	"name": "Data-Ingestion-from-onpremises",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e3861596-147c-43e7-a6b6-4fa6597592bf",
+		"tenantId": "3b1147b3-1d23-4cc5-8610-7adf873e06c4"
+	}
+}
