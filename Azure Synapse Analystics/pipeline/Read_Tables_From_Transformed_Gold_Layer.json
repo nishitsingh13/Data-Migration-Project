@@ -1,5 +1,5 @@
 {
-	"name": "Pipeline 1",
+	"name": "Read_Tables_From_Transformed_Gold_Layer",
 	"properties": {
 		"activities": [
 			{
