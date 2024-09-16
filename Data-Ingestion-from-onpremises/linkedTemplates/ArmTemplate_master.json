@@ -1,0 +1,98 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "Data-Ingestion-from-onpremises"
+		},
+		"CloudData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'CloudData'"
+		},
+		"Cloud_Databricks_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'Cloud_Databricks'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://KeyforDBs.vault.azure.net/"
+		},
+		"CloudData_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://onpremisesstoredincloud.dfs.core.windows.net/"
+		},
+		"Cloud_Databricks_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0913-192836-cw665y6h"
+		},
+		"On_Premises_SQLSERVER_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "RAJ"
+		},
+		"On_Premises_SQLSERVER_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorksLT2017"
+		},
+		"On_Premises_SQLSERVER_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "RajkumarManala"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "Data-Ingestion-from-onpremises_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"CloudData_accountKey": {
+						"value": "[parameters('CloudData_accountKey')]"
+					},
+					"Cloud_Databricks_accessToken": {
+						"value": "[parameters('Cloud_Databricks_accessToken')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"CloudData_properties_typeProperties_url": {
+						"value": "[parameters('CloudData_properties_typeProperties_url')]"
+					},
+					"Cloud_Databricks_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('Cloud_Databricks_properties_typeProperties_existingClusterId')]"
+					},
+					"On_Premises_SQLSERVER_properties_typeProperties_server": {
+						"value": "[parameters('On_Premises_SQLSERVER_properties_typeProperties_server')]"
+					},
+					"On_Premises_SQLSERVER_properties_typeProperties_database": {
+						"value": "[parameters('On_Premises_SQLSERVER_properties_typeProperties_database')]"
+					},
+					"On_Premises_SQLSERVER_properties_typeProperties_userName": {
+						"value": "[parameters('On_Premises_SQLSERVER_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
