@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "USE gold_Database\nGO\n\nCREATE OR ALTER PROC CreateSQLServerlessView_gold @ViewName nvarchar(100)\nAS\nBEGIN\n    DECLARE @statement VARCHAR(MAX)\n\n    SET @statement = N'CREATE OR ALTER VIEW ' + @ViewName + N' AS\n    SELECT *\n    FROM\n    OPENROWSET(\n        BULK ''https://onpremisesstoredincloud.dfs.core.windows.net/gold/SalesLT/' + @ViewName + '/'', \n        FORMAT = ''DELTA''\n    ) \n    AS [result]'\n\n    EXEC (@statement)\nEND\nGO\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "gold_Database",
+				"poolName": "Built-in"
+			},
+			"resultLimit": -1
+		},
+		"type": "SqlQuery"
+	}
+}
