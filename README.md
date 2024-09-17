@@ -114,12 +114,13 @@ An Apache Spark Cluster was created to handle distributed data processing. Noteb
   display(df)
   ```
 
- ###### Before Table
+   ###### Before Table
 
-  ![](https://github.com/RajkumarManala1/Azure-Data-Engineering-Project/blob/main/Screenshots%20of%20resources/before2.png?raw=true)
+    ![](https://github.com/RajkumarManala1/Azure-Data-Engineering-Project/blob/main/Screenshots%20of%20resources/before2.png?raw=true)
 
- ###### After Transformation Table
-  ![](https://github.com/RajkumarManala1/Azure-Data-Engineering-Project/blob/main/Screenshots%20of%20resources/after2.png?raw=true)
+   ###### After Transformation Table
+  
+    ![](https://github.com/RajkumarManala1/Azure-Data-Engineering-Project/blob/main/Screenshots%20of%20resources/after2.png?raw=true)
   
 - Data was transformed from bronze to silver layer with the following code:
 
@@ -163,3 +164,48 @@ An Apache Spark Cluster was created to handle distributed data processing. Noteb
 ###### After inserting underscores
 
   ![](https://github.com/RajkumarManala1/Azure-Data-Engineering-Project/blob/main/Screenshots%20of%20resources/after1.png?raw=true)
+
+### Azure Synapse Analytics
+Azure Synapse Analytics was used to store the transformed data in a SQL Server database and facilitate querying.
+
+#### Key Steps:
+
+##### 1. Create SQL Serverless View:
+
+- Created a gold_Database and used the following stored procedure to connect to Azure Data Lake Storage and create views for each table:
+
+  ```sql
+  USE gold_Database
+  GO
+  
+  CREATE OR ALTER PROC CreateSQLServerlessView_gold @ViewName nvarchar(100)
+  AS
+  BEGIN
+      DECLARE @statement VARCHAR(MAX)
+  
+      SET @statement = N'CREATE OR ALTER VIEW ' + @ViewName + N' AS
+      SELECT *
+      FROM
+      OPENROWSET(
+          BULK ''https://onpremisesstoredincloud.dfs.core.windows.net/gold/SalesLT/' + @ViewName + '/'', 
+          FORMAT = ''DELTA''
+      ) 
+      AS [result]'
+  
+      EXEC (@statement)
+  END
+  GO
+  ```
+
+##### 2. Pipeline Configuration:
+
+- Built a pipeline with Get Metadata and For Each activities to process each table name and store the data in the SQL Server database.
+
+  `@activity('Get table names').output.childItems`
+
+- When the pipeline runs, it stores the data in the SQL Server database in Azure Synapse Analytics.
+
+### Power BI
+
+- After the data was stored in Azure Synapse Analytics, Power BI was used to connect to the SQL Server database and generate visual reports and insights.
+
