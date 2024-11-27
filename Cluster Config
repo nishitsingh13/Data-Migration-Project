@@ -1,0 +1,7 @@
+Azure Databricks Cluster Configuration
+Cluster Type: Standard (Interactive or Job Cluster)
+Node Types:
+Driver Node: Standard_DS3_v2 (14 GB memory, 4 cores)
+Worker Nodes: Standard_DS3_v2 (scale as needed)
+Runtime Version: Databricks Runtime 10.4 (or latest LTS version)
+Autoscaling: Enabled for cost optimization (min 2 nodes, max 8 nodes).
